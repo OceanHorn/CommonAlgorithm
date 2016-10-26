@@ -11,8 +11,8 @@ public class Sort {
 //        insertSort(number);
 //        selectSort(numbers);
 
-        shellSort(numbers);
-
+//        shellSort(numbers);
+        quick_sort(numbers, 0, numbers.length - 1);
         printArray(numbers);
     }
 
@@ -112,6 +112,35 @@ public class Sort {
         }
     }
 
+    // 快速排序
+    // http://blog.csdn.net/morewindows/article/details/6684558
+    public static void quick_sort(int array[], int leftIndex, int rightIndex) {
+
+        if (leftIndex < rightIndex) {
+            //Swap(s[l], s[(l + r) / 2]); //将中间的这个数和第一个数交换 参见注1
+            int i = leftIndex, j = rightIndex, middleValue = array[i];  // 将i位置的数据挖出,作为中间值
+            while (i < j) {
+                while(i < j && array[j] >= middleValue) { // 从右向左找第一个小于x的数
+                    j--;
+                }
+                if( i < j) {
+                    array[i] = array[j];
+                    i++;
+                }
+
+                while(i < j && array[i] < middleValue) { // 从左向右找第一个大于等于x的数
+                    i++;
+                }
+                if(i < j) {
+                    array[j] = array[i];
+                    j--;
+                }
+            }
+            array[i] = middleValue;  // 挖出的数据填回
+            quick_sort(array, leftIndex, i - 1); // 递归调用
+            quick_sort(array, i + 1, rightIndex);
+        }
+    }
 
     private static void printArray(int[] array) {
         int lastIndex = array.length - 1;
